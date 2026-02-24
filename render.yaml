@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: cafe24-callback-server
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: CAFE24_MALL_ID
+        sync: false
+      - key: CAFE24_CLIENT_ID
+        sync: false
+      - key: CAFE24_CLIENT_SECRET
+        sync: false
+      - key: STREAMLIT_URL
+        value: https://siritt.streamlit.app
