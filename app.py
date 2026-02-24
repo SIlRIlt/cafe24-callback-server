@@ -51,7 +51,7 @@ def callback():
 <body style="font-family:sans-serif;text-align:center;padding:60px;background:#0f0f0f;color:#f5f5f7;">
 <h2 style="color:#c9a84c;">카페24 인증 완료!</h2>
 <p style="color:#86868b;margin-bottom:30px;">아래 버튼을 클릭해서 앱으로 돌아가세요.</p>
-<a href="https://siritt.streamlit.app?auto_login=1234" style="background:#c9a84c;color:#000;font-weight:700;
+<p style="color:#c9a84c;font-size:1.1rem;">이제 쇼핑몰 매니저 탭으로 돌아가서<br>"✅ 인증 완료 확인" 버튼을 클릭하세요!</p> style="background:#c9a84c;color:#000;font-weight:700;
 padding:14px 28px;border-radius:10px;text-decoration:none;font-size:1rem;">
 쇼핑몰 매니저로 돌아가기
 </a>
