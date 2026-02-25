@@ -18,10 +18,8 @@ def index():
 def callback():
     code = request.args.get("code", "")
     error = request.args.get("error", "")
-
     if error or not code:
         return "<h2>인증 실패</h2>"
-
     try:
         hostname = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "localhost")
         res = requests.post(
@@ -35,24 +33,26 @@ def callback():
         )
         data = res.json()
         token = data.get("access_token", "")
-
         if not token:
             return "<h2>토큰 발급 실패</h2><p>" + str(data) + "</p>"
-
         token_store["latest"] = {
             "access_token": token,
             "refresh_token": data.get("refresh_token", "")
         }
-
         html = "<!DOCTYPE html><html><body style='font-family:sans-serif;text-align:center;padding:60px;background:#0f0f0f;color:#f5f5f7;'>"
         html += "<h2 style='color:#c9a84c;'>카페24 인증 완료!</h2>"
         html += "<p style='color:#86868b;'>쇼핑몰 매니저 탭으로 돌아가서</p>"
         html += "<p style='color:#c9a84c;font-size:1.2rem;font-weight:700;'>✅ 인증 완료 확인 버튼을 클릭하세요!</p>"
         html += "</body></html>"
         return html
-
     except Exception as e:
         return "<h2>오류: " + str(e) + "</h2>"
+
+@app.route("/check")
+def check_token():
+    if "latest" in token_store:
+        return jsonify({"token_ready": True})
+    return jsonify({"token_ready": False})
 
 @app.route("/token")
 def get_token():
