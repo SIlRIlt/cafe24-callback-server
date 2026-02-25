@@ -4,16 +4,3 @@ services:
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
-```
-
-**⑥ 오른쪽 상단 초록색 `Commit changes` 버튼 클릭**
-
-**⑦ 팝업창이 뜨면 다시 `Commit changes` 버튼 클릭**
-
----
-
-## 2단계 — Render에서 PORT 환경변수 삭제
-
-**① 브라우저에서 아래 주소 입력 후 접속:**
-```
-https://render.com
