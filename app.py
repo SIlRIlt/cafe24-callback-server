@@ -7,7 +7,6 @@ app = Flask(__name__)
 CAFE24_MALL_ID = os.environ.get("CAFE24_MALL_ID", "")
 CAFE24_CLIENT_ID = os.environ.get("CAFE24_CLIENT_ID", "")
 CAFE24_CLIENT_SECRET = os.environ.get("CAFE24_CLIENT_SECRET", "")
-STREAMLIT_URL = os.environ.get("STREAMLIT_URL", "https://siritt.streamlit.app")
 
 token_store = {}
 
@@ -18,11 +17,10 @@ def index():
 @app.route("/callback")
 def callback():
     code = request.args.get("code", "")
-    state = request.args.get("state", "")
     error = request.args.get("error", "")
 
     if error or not code:
-        return "<h2>인증 실패: " + (error or "코드 없음") + "</h2>"
+        return "<h2>인증 실패</h2>"
 
     try:
         hostname = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "localhost")
@@ -46,15 +44,12 @@ def callback():
             "refresh_token": data.get("refresh_token", "")
         }
 
-        return """<!DOCTYPE html>
-<html>
-<body style="font-family:sans-serif;text-align:center;padding:60px;background:#0f0f0f;color:#f5f5f7;">
-<h2 style="color:#c9a84c;">카페24 인증 완료!</h2>
-<p style="color:#86868b;margin-bottom:20px;">인증이 완료됐어요!</p>
-<p style="color:#c9a84c;font-size:1.1rem;line-height:2;">이제 쇼핑몰 매니저 탭으로 돌아가서<br>아래 버튼을 클릭하세요!</p>
-<p style="color:#f5f5f7;font-size:1.3rem;font-weight:700;margin-top:20px;">✅ 인증 완료 확인</p>
-</body>
-</html>"""
+        html = "<!DOCTYPE html><html><body style='font-family:sans-serif;text-align:center;padding:60px;background:#0f0f0f;color:#f5f5f7;'>"
+        html += "<h2 style='color:#c9a84c;'>카페24 인증 완료!</h2>"
+        html += "<p style='color:#86868b;'>쇼핑몰 매니저 탭으로 돌아가서</p>"
+        html += "<p style='color:#c9a84c;font-size:1.2rem;font-weight:700;'>✅ 인증 완료 확인 버튼을 클릭하세요!</p>"
+        html += "</body></html>"
+        return html
 
     except Exception as e:
         return "<h2>오류: " + str(e) + "</h2>"
